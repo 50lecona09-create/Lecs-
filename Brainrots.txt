@@ -1,26 +1,33 @@
--- Script to duplicate brainrots in "Steal a Brainrot"
+-- Script para duplicar brainrots en "Steal a Brainrot"
 
 local function duplicateBrainrots()
-    local player = game.Players.LocalPlayer  -- Obtiene el jugador local
-    local character = player.Character or player.CharacterAdded:Wait()  -- Espera hasta que el personaje esté disponible
-    local backpack = player:FindFirstChildOfClass("Backpack")  -- Busca el backpack del jugador
+    local player = game.Players.LocalPlayer
+    print("Jugador encontrado: " .. tostring(player))
+
+    local character = player.Character or player.CharacterAdded:Wait()
+    print("Personaje encontrado: " .. tostring(character))
+
+    local backpack = player:FindFirstChildOfClass("Backpack")
+    print("Backpack encontrado: " .. tostring(backpack))
 
     if backpack then
-        local brainrotFolder = backpack:FindFirstChild("BrainrotFolder")  -- Busca la carpeta de brainrots
+        local brainrotFolder = backpack:FindFirstChild("BrainrotFolder")
+        print("BrainrotFolder encontrado: " .. tostring(brainrotFolder))
 
         if brainrotFolder then
-            for _, brainrot in ipairs(brainrotFolder:GetChildren()) do  -- Itera sobre los hijos de brainrotFolder
-                if brainrot:IsA("Tool") then  -- Verifica si el objeto es una herramienta
-                    local clone = brainrot:Clone()  -- Clona el brainrot
-                    clone.Parent = brainrotFolder  -- Añade la copia al brainrotFolder
+            for _, brainrot in ipairs(brainrotFolder:GetChildren()) do
+                if brainrot:IsA("Tool") then
+                    local clone = brainrot:Clone()
+                    clone.Parent = brainrotFolder
+                    print("Brainrot clonado: " .. brainrot.Name)
                 end
             end
         else
-            print("BrainrotFolder not found in backpack.")  -- Mensaje de depuración
+            print("BrainrotFolder no encontrado en el backpack.")
         end
     else
-        print("Backpack not found.")  -- Mensaje de depuración
+        print("Backpack no encontrado.")
     end
 end
 
-duplicateBrainrots()  -- Llama a la función para duplicar brainrots
+duplicateBrainrots()
