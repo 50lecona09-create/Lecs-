@@ -1,0 +1,26 @@
+-- Script to duplicate brainrots in "Steal a Brainrot"
+
+local function duplicateBrainrots()
+    local player = game.Players.LocalPlayer  -- Obtiene el jugador local
+    local character = player.Character or player.CharacterAdded:Wait()  -- Espera hasta que el personaje esté disponible
+    local backpack = player:FindFirstChildOfClass("Backpack")  -- Busca el backpack del jugador
+
+    if backpack then
+        local brainrotFolder = backpack:FindFirstChild("BrainrotFolder")  -- Busca la carpeta de brainrots
+
+        if brainrotFolder then
+            for _, brainrot in ipairs(brainrotFolder:GetChildren()) do  -- Itera sobre los hijos de brainrotFolder
+                if brainrot:IsA("Tool") then  -- Verifica si el objeto es una herramienta
+                    local clone = brainrot:Clone()  -- Clona el brainrot
+                    clone.Parent = brainrotFolder  -- Añade la copia al brainrotFolder
+                end
+            end
+        else
+            print("BrainrotFolder not found in backpack.")  -- Mensaje de depuración
+        end
+    else
+        print("Backpack not found.")  -- Mensaje de depuración
+    end
+end
+
+duplicateBrainrots()  -- Llama a la función para duplicar brainrots
